@@ -20,11 +20,10 @@ steps:
   - curl -sL https://github.com/rokibhasansagar/ffmpeg-build-script/raw/update3/build-ffmpeg -O
   - chmod a+x build-ffmpeg
   - sudo apt-get update -qy
-  - sudo apt-get -qy --no-install-recommends install build-essential curl ca-certificates libva-dev python3 python-is-python3
+  - sudo apt-get -qy install build-essential curl ca-certificates libva-dev mercurial python3 python-is-python3
   - echo && date && echo
   - SKIPINSTALL=yes ./build-ffmpeg --build --enable-gpl-and-non-free --full-static
   - echo && date && echo
   - ls -lAog ./workspace/bin/
-  - ./workspace/bin/ffmpeg -version
+  - ./workspace/bin/ffmpeg -help
   - df -hlT
-
