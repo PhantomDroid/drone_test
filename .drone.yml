@@ -13,11 +13,18 @@ steps:
   image: fr3akyphantom/droid-builder:focal
   commands:
   - pwd && ls -lAog
-  - printenv
-  - id
-  - cat /etc/os-release || true
+  - sudo mkdir -p /opt/ffmpeg_build
+  - sudo chmod 777 /opt/ffmpeg_build -R
+  - sudo chown builder:builder /opt/ffmpeg_build -R
+  - cd /opt/ffmpeg_build
+  - curl -sL https://github.com/rokibhasansagar/ffmpeg-build-script/raw/update3/build-ffmpeg -O
+  - chmod a+x build-ffmpeg
+  - sudo apt-get update -qy
+  - sudo apt-get -qy --no-install-recommends install build-essential curl ca-certificates libva-dev python3 python-is-python3
+  - echo && date && echo
+  - SKIPINSTALL=yes ./build-ffmpeg --build --enable-gpl-and-non-free --full-static
+  - echo && date && echo
+  - ls -lAog ./workspace/bin/
+  - ./workspace/bin/ffmpeg -version
   - df -hlT
-  - cat /proc/cpuinfo
-  - nproc --all
-  - free -mht
-  - ls -lAog /*
+
