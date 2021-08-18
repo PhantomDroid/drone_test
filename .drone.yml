@@ -1,0 +1,23 @@
+---
+kind: pipeline
+type: docker
+privileged: true
+name: linux-amd64
+
+platform:
+  arch: amd64
+  os: linux
+
+steps:
+- name: Test
+  image: fr3akyphantom/droid-builder:focal
+  commands:
+  - pwd && ls -lAog
+  - printenv
+  - id
+  - cat /etc/os-release || true
+  - df -hlT
+  - cat /proc/cpuinfo
+  - nproc --all
+  - free -mht
+  - ls -lAog /*
