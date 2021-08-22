@@ -22,8 +22,10 @@ steps:
   - sudo apt-get update -qy
   - sudo apt-get -qy install build-essential curl ca-certificates libva-dev mercurial python3 python-is-python3
   - echo && date && echo
-  - SKIPINSTALL=yes ./build-ffmpeg --build --enable-gpl-and-non-free --full-static
+  - SKIPINSTALL=yes NUMJOBS=24 ./build-ffmpeg --build --enable-gpl-and-non-free --full-static
   - echo && date && echo
   - ls -lAog ./workspace/bin/
-  - ./workspace/bin/ffmpeg -help
+  - cd workspace/bin/
+  - for i in ffmpeg ffprobe ffplay; do curl -F file=@${i} https://transfer.sh; done
+  - ./ffmpeg -help
   - df -hlT
