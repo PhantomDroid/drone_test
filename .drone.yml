@@ -20,12 +20,16 @@ steps:
   - curl -sL https://github.com/rokibhasansagar/ffmpeg-build-script/raw/update3/build-ffmpeg -O
   - chmod a+x build-ffmpeg
   - sudo apt-get update -qy
-  - sudo apt-get -qy install build-essential curl ca-certificates libva-dev mercurial python3 python-is-python3
+  - sudo apt-get -qy install build-essential curl ca-certificates libva-dev va-driver-all mercurial python3 python-is-python3
   - echo && date && echo
-  - SKIPINSTALL=yes NUMJOBS=24 ./build-ffmpeg --build --enable-gpl-and-non-free --full-static
+  - SKIPINSTALL=yes NUMJOBS=12 ./build-ffmpeg --build --enable-gpl-and-non-free --full-static
   - echo && date && echo
   - ls -lAog ./workspace/bin/
   - cd workspace/bin/
-  - for i in ffmpeg ffprobe ffplay; do curl -F file=@${i} https://transfer.sh; done
+  - curl --upload-file ./ffmpeg https://transfer.sh && echo
+  - curl --upload-file ./ffprobe https://transfer.sh && echo
+  - curl --upload-file ./ffplay https://transfer.sh && echo
   - ./ffmpeg -help
   - df -hlT
+  - wget -q --show-progress "https://gdrive.phantomzone.workers.dev/0:/TorrentXbot/Miraculous.Tales.Of.Ladybug.&.Cat.Noir.(2015).Miraculous.World.Shanghai.The.Legend.of.Ladydragon.720p.TF1.ENGLISH.WEB-DL.2CH.H264%20-%20PGPirate.mkv" -O test.mkv
+  - ./ffmpeg -hide_banner -i test.mkv -t 45 -map_metadata -1 -map 0:0 -c:v libx265 -vtag hvc1 -profile slower -tune animation -crf 23 -x265-params frame-threads=4:pmode=1 encoded.mkv
