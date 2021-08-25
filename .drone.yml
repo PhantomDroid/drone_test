@@ -12,7 +12,7 @@ steps:
 - name: Test
   image: fr3akyphantom/droid-builder:focal
   commands:
-  - sudo apt-get update -qqy && sudo apt-get install mediainfo
+  - sudo apt-get update -qqy && sudo apt-get install -qqy mediainfo
   - wget -q "	https://transfer.sh/get/1bmvFWD/ffmpeg" && chmod a+x ./ffmpeg
   - wget -q "https://gdrive.phantomzone.workers.dev/0:/TorrentXbot/Miraculous.Tales.Of.Ladybug.&.Cat.Noir.(2015).Miraculous.World.Shanghai.The.Legend.of.Ladydragon.720p.TF1.ENGLISH.WEB-DL.2CH.H264%20-%20PGPirate.mkv" -O test.mkv
   - ./ffmpeg -hide_banner -i test.mkv -t 45 -map_metadata -1 -map 0:0 -c:v libx265 -vtag hvc1 -preset slower -tune animation -crf 23 -x265-params pools=12:frame-threads=2:pmode=1 encoded.mkv
