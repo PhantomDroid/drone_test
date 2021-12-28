@@ -13,9 +13,8 @@ steps:
   image: fr3akyphantom/droid-builder:focal
   commands:
   - sudo apt-get update -qqy && sudo apt-get install -qqy mediainfo libva-dev
-  - export FTOOL_URL=$(curl -sL "https://api.github.com/repos/rokibhasansagar/FFmpeg-Builds/releases/latest" | jq -r '.assets[] | select(.browser_download_url | contains("linux64-nonfree-4.4.tar.xz")) | .browser_download_url')
-  - wget -q ${FTOOL_URL} || curl -sL ${FTOOL_URL} -O
-  - tar -xJf ff*.tar.xz --strip-components 1
+  - wget -q "https://github.com/rokibhasansagar/FFmpeg-Builds/releases/download/autobuild-2021-12-24-03-27/ffmpeg-n4.4.1-2-gcc33e73618-linux64-nonfree-4.4.tar.xz"
+  - tar -xJf ffmpeg*.tar.xz --strip-components 1
   - sudo mv bin/* /usr/local/bin/
   - mkdir -p ~/test && cd ~/test
   - wget -q "https://gdrivecdn4.phantomdroidy.workers.dev/0:/Another_MiraculouStreams/S01E01/SourceVideoChunks/Miraculous.Tales.of.Ladybug.and.Cat.Noir.S01E01.1080p.part_01.mkv" -O test.mkv
