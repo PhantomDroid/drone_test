@@ -2,11 +2,7 @@
 kind: pipeline
 type: docker
 privileged: true
-name: linux-amd64-1
-
-platform:
-  arch: amd64
-  os: linux
+name: linux-amd64-one
 
 steps:
 - name: One
@@ -24,15 +20,12 @@ steps:
   - mediainfo ./encoded.mkv || true
   - curl -s --upload-file ./encoded.mkv https://transfer.sh && echo
 
+
 ---
 kind: pipeline
 type: docker
 privileged: true
-name: linux-amd64-2
-
-platform:
-  arch: amd64
-  os: linux
+name: linux-amd64-two
 
 - name: Two
   pull: if-not-exists
