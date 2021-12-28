@@ -26,6 +26,7 @@ type: docker
 privileged: true
 name: linux-amd64-two
 
+steps:
 - name: Two
   pull: if-not-exists
   image: fr3akyphantom/droid-builder:focal
