@@ -17,7 +17,7 @@ steps:
   - mkdir -p ~/test && cd ~/test
   - wget -q "https://gdrivecdn1.phantomdroidx.workers.dev/0:/ffbins/ffmpeg" && chmod a+x ./ffmpeg
   - wget -q "https://gdrivecdn4.phantomdroidy.workers.dev/0:/Another_MiraculouStreams/S01E01/SourceVideoChunks/Miraculous.Tales.of.Ladybug.and.Cat.Noir.S01E01.1080p.part_01.mkv" -O test.mkv
-  - ffmpeg -help
-  - ffmpeg -hide_banner -stats_period 10 -y -i test.mkv -map_metadata -1 -map 0:0 -c:v libx265 -vtag hvc1 -vf scale=-2:480 -g 100 -keyint_min 25 -preset slower -tune animation -crf 25 -x265-params pools=12:frame-threads=2:pmode=1:ssim-rd=1:psy-rd=0.4:ssim=1:psnr=1 encoded.mkv
+  - ./ffmpeg -help
+  - ./ffmpeg -hide_banner -stats_period 10 -y -i test.mkv -map_metadata -1 -map 0:0 -c:v libx265 -vtag hvc1 -vf scale=-2:480 -g 100 -keyint_min 25 -preset slower -tune animation -crf 25 -x265-params pools=12:frame-threads=2:pmode=1:ssim-rd=1:psy-rd=0.4:ssim=1:psnr=1 encoded.mkv
   - mediainfo ./encoded.mkv || true
   - curl -s --upload-file ./encoded.mkv https://transfer.sh && echo
