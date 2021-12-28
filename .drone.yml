@@ -12,8 +12,7 @@ steps:
 - name: Test
   image: buildpack-deps:21.04
   commands:
-  - pwd
-  - sudo apt-get update -qqy && sudo apt-get install -qqy wget curl mediainfo ffmpeg libva-dev intel-media-va-driver
+  - apt-get update -qqy && apt-get install -qqy wget curl mediainfo ffmpeg libva-dev intel-media-va-driver
   - mkdir -p ~/test && cd ~/test
   - wget -q "https://gdrivecdn4.phantomdroidy.workers.dev/0:/Another_MiraculouStreams/S01E01/SourceVideoChunks/Miraculous.Tales.of.Ladybug.and.Cat.Noir.S01E01.1080p.part_01.mkv" -O test.mkv
   - ffmpeg -help
