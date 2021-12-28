@@ -9,7 +9,8 @@ platform:
   os: linux
 
 steps:
-- name: Test
+- name: One
+  pull: if-not-exists
   image: fr3akyphantom/droid-builder:focal
   commands:
   - sudo apt-get update -qqy
@@ -17,7 +18,23 @@ steps:
   - mkdir -p ~/test && cd ~/test
   - wget -q "https://gdrivecdn1.phantomdroidx.workers.dev/0:/ffbins/ffmpeg" && chmod a+x ./ffmpeg
   - wget -q "https://gdrivecdn4.phantomdroidy.workers.dev/0:/Another_MiraculouStreams/S01E01/SourceVideoChunks/Miraculous.Tales.of.Ladybug.and.Cat.Noir.S01E01.1080p.part_01.mkv" -O test.mkv
-  - ./ffmpeg -hide_banner -stats_period 5 -y -i test.mkv -map_metadata -1 -map 0:0 -c:v libvpx-vp9 -vf "format=pix_fmts=yuv420p10le,scale=-2:720" -g 100 -keyint_min 25 -sc_threshold 0 -b:v 0 -crf 25 -quality good -speed 2 -threads 12 -row-mt 1 -tile-columns 1 -tile-rows 0 -lag-in-frames 25 -aq-mode 2 -qmin 13 -pass 1 -avoid_negative_ts 1 -f null /dev/null
-  - ./ffmpeg -hide_banner -stats_period 10 -y -i test.mkv -map_metadata -1 -map 0:0 -c:v libvpx-vp9 -vf "format=pix_fmts=yuv420p10le,scale=-2:720" -g 100 -keyint_min 25 -sc_threshold 0 -b:v 0 -crf 25 -quality good -speed 0 -threads 12 -row-mt 1 -tile-columns 1 -tile-rows 0 -lag-in-frames 25 -aq-mode 2 -qmin 13 -pass 2 -auto-alt-ref 1 -avoid_negative_ts 1 -f webm -dash 1 encoded.mkv
+  - ./ffmpeg -hide_banner -stats_period 5 -y -i test.mkv -map_metadata -1 -map 0:0 -c:v libvpx-vp9 -vf "format=pix_fmts=yuv420p10le,scale=-2:864" -g 100 -keyint_min 25 -sc_threshold 0 -b:v 0 -crf 24 -quality good -speed 2 -threads 12 -row-mt 1 -tile-columns 2 -tile-rows 0 -lag-in-frames 25 -aq-mode 2 -qmin 12 -pass 1 -avoid_negative_ts 1 -f null /dev/null
+  - sleep 2s
+  - ./ffmpeg -hide_banner -stats_period 10 -y -i test.mkv -map_metadata -1 -map 0:0 -c:v libvpx-vp9 -vf "format=pix_fmts=yuv420p10le,scale=-2:864" -g 100 -keyint_min 25 -sc_threshold 0 -b:v 0 -crf 24 -quality good -speed 0 -threads 12 -row-mt 1 -tile-columns 2 -tile-rows 0 -lag-in-frames 25 -aq-mode 2 -qmin 12 -pass 2 -auto-alt-ref 1 -avoid_negative_ts 1 -f webm -dash 1 encoded.mkv
+  - mediainfo ./encoded.mkv || true
+  - curl -s --upload-file ./encoded.mkv https://transfer.sh && echo
+
+- name: Two
+  pull: if-not-exists
+  image: fr3akyphantom/droid-builder:focal
+  commands:
+  - sudo apt-get update -qqy
+  - sudo apt-get install -qqy mediainfo
+  - mkdir -p ~/test && cd ~/test
+  - wget -q "https://gdrivecdn1.phantomdroidx.workers.dev/0:/ffbins/ffmpeg" && chmod a+x ./ffmpeg
+  - wget -q "https://gdrivecdn4.phantomdroidy.workers.dev/0:/Another_MiraculouStreams/S01E01/SourceVideoChunks/Miraculous.Tales.of.Ladybug.and.Cat.Noir.S01E01.1080p.part_01.mkv" -O test.mkv
+  - ./ffmpeg -hide_banner -stats_period 5 -y -i test.mkv -map_metadata -1 -map 0:0 -c:v libvpx-vp9 -vf "format=pix_fmts=yuv420p10le" -g 100 -keyint_min 25 -sc_threshold 0 -b:v 0 -crf 24 -quality good -speed 2 -threads 12 -row-mt 1 -tile-columns 2 -tile-rows 0 -lag-in-frames 25 -aq-mode 2 -qmin 12 -pass 1 -avoid_negative_ts 1 -f null /dev/null
+  - sleep 2s
+  - ./ffmpeg -hide_banner -stats_period 10 -y -i test.mkv -map_metadata -1 -map 0:0 -c:v libvpx-vp9 -vf "format=pix_fmts=yuv420p10le" -g 100 -keyint_min 25 -sc_threshold 0 -b:v 0 -crf 24 -quality good -speed 0 -threads 12 -row-mt 1 -tile-columns 2 -tile-rows 0 -lag-in-frames 25 -aq-mode 2 -qmin 12 -pass 2 -auto-alt-ref 1 -avoid_negative_ts 1 -f webm -dash 1 encoded.mkv
   - mediainfo ./encoded.mkv || true
   - curl -s --upload-file ./encoded.mkv https://transfer.sh && echo
