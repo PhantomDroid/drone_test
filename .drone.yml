@@ -12,7 +12,8 @@ steps:
   - cat /proc/cpuinfo | grep -e "vendor_id" -e "model name" | sort -u
   - if command -v sudo; then export SUDO="sudo"; else export SUDO=""; fi
   - export DEBIAN_FRONTEND=noninteractive
-  - ${SUDO} apt-get update -qqy && ${SUDO} apt-get install -qqy mediainfo &>/dev/null
+  - ${SUDO} apt-get update -qqy && ${SUDO} apt-get install -qqy gpgv2 mediainfo
+  - . ~/.bashrc || true
   - mkdir -p ~/test
   - cd "$(mktemp -d)"
   - wget -q https://github.com/rokibhasansagar/FFmpeg-Builds/releases/download/latest/ffmpeg-n5.0-latest-linux64-nonfree-5.0.tar.xz
