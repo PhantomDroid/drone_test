@@ -6,14 +6,13 @@ name: linux-amd64-one
 steps:
 - name: One
   pull: if-not-exists
-  image: buildpack-deps:hirsute
+  image: fr3akyphantom/droid-builder:focal
   commands:
   - printf "CPU Thread available = %s\n" "$(nproc --all)"
   - cat /proc/cpuinfo | grep -e "vendor_id" -e "model name" | sort -u
   - if command -v sudo; then export SUDO="sudo"; else export SUDO=""; fi
   - export DEBIAN_FRONTEND=noninteractive
-  - ${SUDO} apt-get update -qqy && ${SUDO} apt-get install -qqy gpgv2 mediainfo
-  - . ~/.bashrc || true
+  - ${SUDO} apt-get update -qqy && ${SUDO} apt-get install -qqy mediainfo
   - mkdir -p ~/test
   - cd "$(mktemp -d)"
   - wget -q https://github.com/rokibhasansagar/FFmpeg-Builds/releases/download/latest/ffmpeg-n5.0-latest-linux64-nonfree-5.0.tar.xz
